@@ -29,6 +29,11 @@ type userAgentResponse struct {
 	UserAgent string `json:"user-agent"`
 }
 
+type Server struct {
+	Hostname string   `json:"hostname"`
+	IPs      []string `json:"ips"`
+}
+
 // A generic response for any incoming request that should not contain a body
 // (GET, HEAD, OPTIONS, etc).
 type noBodyResponse struct {
@@ -37,6 +42,7 @@ type noBodyResponse struct {
 	Method  string      `json:"method"`
 	Origin  string      `json:"origin"`
 	URL     string      `json:"url"`
+	Server  Server      `json:"server"`
 
 	Deflated bool `json:"deflated,omitempty"`
 	Gzipped  bool `json:"gzipped,omitempty"`

@@ -55,13 +55,19 @@ func (h *HTTPBin) UTF8(w http.ResponseWriter, _ *http.Request) {
 
 // Get handles HTTP GET requests
 func (h *HTTPBin) Get(w http.ResponseWriter, r *http.Request) {
-	writeJSON(http.StatusOK, w, &noBodyResponse{
-		Args:    r.URL.Query(),
-		Headers: getRequestHeaders(r, h.excludeHeadersProcessor),
-		Method:  r.Method,
-		Origin:  getClientIP(r),
-		URL:     getURL(r).String(),
-	})
+	writeJSON(
+		http.StatusOK, w, &noBodyResponse{
+			Args:    r.URL.Query(),
+			Headers: getRequestHeaders(r, h.excludeHeadersProcessor),
+			Method:  r.Method,
+			Origin:  getClientIP(r),
+			URL:     getURL(r).String(),
+			Server: Server{
+				Hostname: getServerHostname(),
+				IPs: getServerIPs(),
+			},
+		},
+	)
 }
 
 // Anything returns anything that is passed to request.
